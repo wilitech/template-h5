@@ -1,0 +1,8 @@
+module.exports = {
+  dev: {
+    port: 7777 // 项目启动端口
+  },
+  apiPath: 'http://neweekly.com.cn/client/',
+  publicPath: '.', // 静态资源前缀
+  prod: true
+}

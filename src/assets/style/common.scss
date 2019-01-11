@@ -1,3 +1,12 @@
+@import "./toast.scss";
+
+@font-face {
+  font-family: 'FZYanSJW_Zhun';
+  src: url('../font/FZYanSJW_Zhun.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html {
   margin: 0;
   padding: 0;
@@ -52,4 +61,10 @@ ul,li {
 [flexContainer] {
   display: flex;
   width: 750px;
+}
+
+@mixin bg-cover($imgUrl) {
+  background: $imgUrl;
+  background-position: 50% 50%;
+  background-size: cover; 
 }

@@ -42,7 +42,8 @@ const rules = [{
 		test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
 		loader: 'url-loader',
 		options: {
-			limit: 10000,
+      limit: 10000,
+      outputPath: "fonts"
 		}
 	},
 	{
@@ -62,8 +63,8 @@ const rules = [{
 			publicPath: "../"
 		})
 	}, {
-		test: require.resolve('jquery'),
-		loader: 'exports-loader?window.jQuery!script-loader'
+		test: require.resolve('zepto'),
+		loader: 'exports-loader?window.Zepto!script-loader'
 	}
 ];
 module.exports = rules;
