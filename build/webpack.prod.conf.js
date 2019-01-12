@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require("webpack");
 const merge = require("webpack-merge");
+const config = require("../private.config");
 // 清除目录等
 const cleanWebpackPlugin = require("clean-webpack-plugin");
 
@@ -17,8 +18,8 @@ const webpackConfigProd = {
 	output: {
 		path: path.resolve(__dirname, '../dist'),
 		// 打包多出口文件
-		filename: './js/[name].[hash].js',
-		publicPath: './'
+		filename: 'js/[name].[hash].js',
+		publicPath: process.env.fontSpidering === "true" ? './' : config.publicPath
 	},
 	devtool: 'cheap-module-eval-source-map',
 	plugins: [
@@ -58,6 +59,5 @@ const webpackConfigProd = {
 	module: {
 		rules: []
 	},
-
 }
 module.exports = merge(webpackConfigBase, webpackConfigProd);

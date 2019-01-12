@@ -6,6 +6,7 @@ bin-release/
 [Bb]in/ # FlashDevelop bin
 node_modules/
 dist/
+src/assets/font/
 .vscode/
 .vscode
 .idea/

@@ -2,7 +2,16 @@ module.exports = {
   dev: {
     port: 7777 // 项目启动端口
   },
-  apiPath: 'http://neweekly.com.cn/client/',
+  apiPath: 'http://xx.com.cn/xx/',
   publicPath: '.', // 静态资源前缀
+  // 七牛配置
+  useQiniu: false,
+  qiniu: {
+    ACCESS_KEY: '',
+    SECRET_KEY: '',
+    bucket: '',
+    origin: '',
+    publicPrefix: ''
+  },
   prod: true
 }

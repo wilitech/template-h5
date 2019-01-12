@@ -4,6 +4,9 @@
   margin: 0;
   padding: 0;
 }
+body {
+  position: relative;
+}
 audio {
   position: absolute;
   left: -9999px;
@@ -12,10 +15,47 @@ audio {
   width: 1px;
 }
 article {
+  position: absolute;
   font-family: 'FZYanSJW_Zhun';
   text-align: center;
-  padding: 80px 40px;
-  font-size: 40px;
-  line-height: 2;
-  color: #737373;
+  font-size: 80px;
+  line-height: 1.6;
+  color: #ffffff;
+}
+.page {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#htmlNode {
+  position: relative;
+  background: url('../../assets/static/bg.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200%;
+  height: 200%;
+}
+.mask {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  &.bottom {
+    background: #000000;
+    opacity: 0.3;
+  }
+  &.front {
+    background: #ffffff;
+  }
+}
+#qrcode {
+  width: 20%;
+  margin-top: 80px;
 }

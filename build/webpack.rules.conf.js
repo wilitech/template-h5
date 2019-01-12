@@ -43,7 +43,8 @@ const rules = [{
 		loader: 'url-loader',
 		options: {
       limit: 10000,
-      outputPath: "fonts"
+      outputPath: "fonts",
+      name: process.env.fontSpidering === "true" ? '[name].[ext]' : '[hash:32].[ext]'
 		}
 	},
 	{
