@@ -14,6 +14,7 @@
 
 ```bash
 # 开始
+cp private.config.js.example private.config.js
 npm install
 npm run dev
 # 打包
