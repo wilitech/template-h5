@@ -107,6 +107,18 @@ function iSlider(opts) {
   this.init()
 }
 /**  @lends iSlider */
+
+// fix passive event listener bug https://juejin.im/post/5ad804c1f265da504547fe68
+var passiveSupported = false
+try {
+  var options = Object.defineProperty({}, 'passive', {
+    get: function() {
+      passiveSupported = true
+    }
+  })
+  window.addEventListener('passiveSupportedTest', null, options)
+} catch (err) {}
+
 iSlider.prototype = {
   wrap: null,
   index: 0,
@@ -257,7 +269,7 @@ iSlider.prototype = {
         function(e) {
           e.target.getAttribute('data-stop') !== 'true' && e.preventDefault()
         },
-        false
+        passiveSupported ? { passive: false } : false
       )
     }
   },

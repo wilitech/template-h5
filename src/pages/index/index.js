@@ -5,6 +5,7 @@ import Loader from '@/assets/js/loader'
 import Wx from '@/assets/js/wx'
 import domtoimage from 'dom-to-image'
 import QRCode from 'qrcode'
+import { preloads } from './data'
 import Config from '../../../private.config'
 import './index.scss'
 
@@ -19,9 +20,16 @@ const $bgm = $('#bgm').get(0)
 
 const app = {
   loaded: false,
+  resulteGenerated: false,
   iSlider: null,
   init() {
-    this.generateQrcode()
+    this.iSlider = new iSlider({
+      wrap: '.wrapper',
+      item: 'section',
+      noslide: [...Array(3).keys()],
+      lastLocate: false
+    })
+    this.loading()
     // $bgm.play()
     // document.addEventListener(
     //   'WeixinJSBridgeReady',
@@ -30,13 +38,50 @@ const app = {
     //   },
     //   false
     // )
-    // this.loading()
     // Wx.init({
     //   getParamUrl: Config.prod
     //     ? 'http://xxx.com.cn/client/wx/getJsapiTicket'
     //     : '/wx/getJsapiTicket',
     //   shareObj: shareObj
     // })
+  },
+  initEvent() {},
+  loading() {
+    Loader(preloads, (percent, isFinish) => {
+      let $percent = $('.progress'),
+        $bar = $('.bar-active')
+      if (!isFinish) {
+        $bar.animate({ width: percent + '%' }, 500)
+        $percent.html(percent + '%')
+      } else {
+        $bar.animate({ width: '100%' }, 500)
+        $percent.html('已完成')
+        this.loaded = true
+        this.loadPage('load-result')
+      }
+    })
+  },
+  loadPage(page, isPre) {
+    console.log('loadpage', page, this.currentPage)
+    isPre ? this.iSlider.prev() : this.iSlider.next()
+    // do something
+    this.currentPage = page
+    switch (page) {
+      case 'loading':
+        this.loaded ? this.loadPage('load-result') : this.loading()
+        break
+      case 'load-result':
+        this.resulteGenerated
+          ? this.loadPage('result')
+          : setTimeout(() => {
+              this.generateQrcode()
+            }, 1000)
+        break
+      case 'result':
+        break
+      default:
+        break
+    }
   },
   generateQrcode() {
     QRCode.toDataURL(
@@ -49,36 +94,22 @@ const app = {
     )
   },
   html2Png() {
-    const node = document.getElementById('htmlNode')
+    const node = document.getElementById('resultNode')
     domtoimage
       .toPng(node)
-      .then(function(dataUrl) {
+      .then(dataUrl => {
         let img = new Image()
         img.src = dataUrl
         img.classList = ['screenshot']
         node.style.display = 'none'
         $('.mask.front').hide()
         node.parentNode.appendChild(img)
+        this.resulteGenerated = true
+        this.loadPage('result')
       })
       .catch(function(error) {
         console.error('oops, something went wrong!', error)
       })
-  },
-  loading() {
-    Loader(preloads, (percent, isFinish) => {
-      // let $percent = $('.progress'),
-      //   $bar = $('.bar-active')
-      // if (!isFinish) {
-      //   $bar.animate({ width: percent + '%' }, 500)
-      //   $percent.html(percent + '%')
-      // } else {
-      //   $bar.animate({ width: '100%' }, 500)
-      //   $percent.html('已完成')
-      //   this.loaded = true
-      //   this.currentPage == 'loading' && this.loadPage('q' + Quiz.picks[0])
-      // }
-    })
-  },
-  initEvent() {}
+  }
 }
 app.init()
